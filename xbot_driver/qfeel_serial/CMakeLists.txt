@@ -43,7 +43,7 @@ include_directories(include)
 
 ## Declare a C++ executable
 add_executable(qfeel_serial src/qfeel_serial.cpp src/serial_port.cpp src/qfeel_sub_pub.cpp src/qfeel_pack.cpp)
-
+add_dependencies(qfeel_serial qfeel_serial_generate_messages_cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(qfeel_serial
   ${catkin_LIBRARIES}
