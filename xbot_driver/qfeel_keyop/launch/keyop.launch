@@ -1,0 +1,25 @@
+<!--
+  KeyOp launcher
+ -->
+
+<launch>
+  <arg name="linear_vel_step"     default="0.01 m"/>
+  <arg name="linear_vel_max"      default="2.0 m"/>
+  <arg name="angular_vel_step"    default="3.0 degree"/>
+  <arg name="angular_vel_max"     default="605 degree"/>
+  <arg name="wait_for_connection" default="true"/>
+  <arg name="cmd_vel_topic_name"  default="cmd_vel"/>
+  <arg name="enable_topic_name"   default="enable_motors"/>
+  <arg name="disable_topic_name"  default="disable_motors"/>
+ 
+  <node pkg="qfeel_keyop" type="qfeel_keyop" name="qfeel_keyop" output="screen">
+    <param name="linear_vel_step"           value="$(arg linear_vel_step)"/>
+    <param name="linear_vel_max"            value="$(arg linear_vel_max)"/>
+    <param name="angular_vel_step"          value="$(arg angular_vel_step)"/>
+    <param name="angular_vel_max"           value="$(arg angular_vel_max)"/>
+    <param name="wait_for_connection"       value="$(arg wait_for_connection)"/>
+    <remap from="qfeel_keyop/cmd_vel"        to="$(arg cmd_vel_topic_name)"/>
+    <remap from="qfeel_keyop/enable_motors"  to="$(arg enable_topic_name)"/>
+    <remap from="qfeel_keyop/disable_motors" to="$(arg disable_topic_name)"/>
+  </node>
+</launch>

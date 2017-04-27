@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package>
+  <name>qfeel_keyop</name>
+  <version>0.10.0</version>
+  <description> Keyboard teleoperation for your robot </description>
+  <author>qfeel qfeel</author>
+  <author>qfeel qfeel</author>
+  <maintainer email="renhaibo@qfeeltech.com">Marcus Liebhardt</maintainer>
+  <license>BSD</license>
+  <url type="bugtracker">https://github.com/renhaibo001</url>
+  <url type="repository">https://github.com/renhaibo001</url>
+  <url type="website">http://ros.org/wiki/qfeel_keyop</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- ROS -->
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>message_generation</build_depend>
+  <!-- ECL -->
+  <build_depend>ecl_exceptions</build_depend>
+  <build_depend>ecl_threads</build_depend>
+  <build_depend>ecl_time</build_depend>
+
+  <!-- ROS -->
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <!-- ECL -->
+  <run_depend>ecl_exceptions</run_depend>
+  <run_depend>ecl_threads</run_depend>
+  <run_depend>ecl_time</run_depend>
+</package>
