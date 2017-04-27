@@ -383,6 +383,8 @@ void
 Qbot_Communication::
 base_ctr_Callback(const geometry_msgs::Twist::ConstPtr &cmd_vel) {
     unsigned char byte[4];
+
+
     float linear_tmp, angular_tmp, y_tmp;
     float linear_x, linear_y, angular_z;
     qbot_message_t message;
@@ -401,7 +403,7 @@ base_ctr_Callback(const geometry_msgs::Twist::ConstPtr &cmd_vel) {
 
     if (isnan(cmd_vel->angular.z)) {
         angular_z = 0;
-    } else angular_z = cmd_vel->angular.z;
+    } else angular_z = -cmd_vel->angular.z; // The protocol of xbot state that right orientation is positive, so we positive the angular speed.
 
     linear_pre = linear_tmp;
 
