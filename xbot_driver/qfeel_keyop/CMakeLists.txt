@@ -19,7 +19,6 @@ generate_messages(DEPENDENCIES
    std_msgs)  
 
 catkin_package(CATKIN_DEPENDS 
-                ros_cpp
                 message_runtime)
 include_directories(include ${catkin_INCLUDE_DIRS})
 
