@@ -1,5 +1,7 @@
 # XBOT driver
 ## Quick Start
+Install ROS indigo environment first. See "http://wiki.ros.org/indigo/Installation/Ubuntu" for help
+
 Clone this repository to your catkin_ws/src folder, then excute
 ```
 cd catkin_ws
