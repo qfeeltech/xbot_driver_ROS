@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <launch>
-    <node pkg="qfeel_serial" name="qfeel_serial" type="qfeel_serial">
+    <node pkg="qfeel_serial" name="qfeel_serial" type="qfeel_serial" output="screen">
         <!-- diff or omni -->
         <param name="model" value="omni" />
         <param name="base_frame" value="base_link" />
