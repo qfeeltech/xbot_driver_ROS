@@ -78,12 +78,12 @@ class Serial_Port
 public:
 
 	Serial_Port();
-	Serial_Port(char *&uart_name_, int &baudrate_);
+	Serial_Port(const char *&uart_name_, int &baudrate_);
 	void initialize_defaults();
 	~Serial_Port();
 
 	bool debug;
-	char *uart_name;
+	const char *uart_name;
 	int  baudrate;
 	int  status;
 

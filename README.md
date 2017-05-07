@@ -11,6 +11,8 @@ When you first run this package, excute follow script to create an udev rules fo
 ```
 rosrun qfeel_xbot create_udev_rules
 ```
+Before you start your driver, you must check your launch file stores in qfeel_xbot/launch/qfeel_xbot.launch. You can set the serial name or the action model of your XBot so that XBot could parse your message correctly.
+
 To run the driver, excute:
 ```
 roslaunch qfeel_xbot qfeel_xbot.launch

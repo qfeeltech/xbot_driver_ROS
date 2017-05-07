@@ -28,7 +28,7 @@
 //   Serial Port Manager Class
 // ----------------------------------------------------------------------------------
 Serial_Port::
-Serial_Port(char *&uart_name_ , int &baudrate_)
+Serial_Port(const char *&uart_name_ , int &baudrate_)
 {
 	initialize_defaults();
 	uart_name = uart_name_;

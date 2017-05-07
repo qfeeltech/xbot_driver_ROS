@@ -23,7 +23,10 @@
 int main(int argc, char **argv) {
     ros::init(argc, argv, "davinci_comm");
 // 	Default input arguments
-    char *uart_name = (char *) "/dev/qfeel_xbot";
+    string uart_name_s;
+    ros::NodeHandle tmpHandle;
+    tmpHandle.param<string>("/qfeel_serial/serial_name", uart_name_s, "/dev/ttyUSB0");
+    const char* uart_name = uart_name_s.c_str();
     int baudrate = 115200;
 
 // 	do the parse, will throw an int if it fails
@@ -59,7 +62,7 @@ int main(int argc, char **argv) {
 // ------------------------------------------------------------------------------
 // throws EXIT_FAILURE if could not open the port
 void
-parse_commandline(int argc, char **argv, char *&uart_name, int &baudrate) {
+parse_commandline(int argc, char **argv, const char *&uart_name, int &baudrate) {
 
     // string for command line usage
     const char *commandline_usage = "usage: serial -d <devicename> -b <baudrate>";
@@ -124,6 +127,7 @@ void commands(Qbot_Interface &api) {
 void
 quit_handler(int sig) {
     // qbot interface
+    ros::shutdown();
     try {
         qbot_interface_quit->handle_quit(sig);
 
@@ -139,7 +143,7 @@ quit_handler(int sig) {
     }
 
     // ROS
-    ros::shutdown();
+
 
     // end program here
     exit(0);

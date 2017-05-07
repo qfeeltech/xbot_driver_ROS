@@ -73,7 +73,7 @@ Qbot_Communication::Qbot_Communication() :
     /* for odometry */
     odometry_info.child_frame_id = comm_nh.param<string>("base_frame", "base_link");
     odometry_info.header.frame_id = comm_nh.param<string>("odom_frame", "odom");
-    model_type_ = comm_nh.param<string>("model", "omni");
+    model_type_ = comm_nh.param<string>("model", "diff");
     last_time = ros::Time::now();
     pthread_create(&tf_pub_tid, NULL, &start_tf_pub_thread, this);
     //pthread_join(tf_pub_tid,NULL);
@@ -116,7 +116,6 @@ publish_power(qbot_power_t power) {
 void
 Qbot_Communication::
 publish_infrared(qbot_infrared_t infrared) {
-    std_msgs::String msg;
     std_msgs::UInt16MultiArray infrared_msg;
     infrared_msg.data.push_back(infrared.back_left);
     infrared_msg.data.push_back(infrared.back_central);
@@ -124,7 +123,6 @@ publish_infrared(qbot_infrared_t infrared) {
     std::stringstream ss;
     ss << (uint16_t) infrared.back_left << " " << (uint16_t) infrared.back_central << " "
        << (uint16_t) infrared.back_right;
-    msg.data = ss.str();
 #if DEBUG_PRINT
     std::cout << "-publish infrared: " << ss.str() << endl;
 #endif
@@ -151,6 +149,7 @@ publish_encoder(qbot_encoder_t encoder) {
     std::cout << "-publish encoder: " << ss.str() << endl;
 #endif
     encoder_pub.publish(encoder_msg);
+
     ss.str("");
 
     // cal odometry
@@ -161,14 +160,16 @@ void
 Qbot_Communication::
 publish_odometry(qbot_encoder_t encoder) {
     if(model_type_ == "diff"){
+        swap<uint16_t>(encoder.back_left,encoder.back_right);
+
 
         if (odometry_th_pre == -400) {    // -400 --> beginning
             odometry_th_pre = 0;
-            encoder_left_pre = encoder.front_left;
-            encoder_right_pre = encoder.front_right;
+            encoder_left_pre = encoder.back_left;
+            encoder_right_pre = encoder.back_right;
         }
-        double left_encoder = encoder.front_left * 1.0 - encoder_left_pre * 1.0;
-        double right_encoder = encoder.front_right * 1.0 - encoder_right_pre * 1.0;
+        double left_encoder = encoder.back_left * 1.0 - encoder_left_pre * 1.0;
+        double right_encoder = encoder.back_right * 1.0 - encoder_right_pre * 1.0;
 
         if (left_encoder > ENCODER_FULL_HALF) {
             left_encoder -= ENCODER_FULL;
@@ -182,8 +183,8 @@ publish_odometry(qbot_encoder_t encoder) {
             right_encoder += ENCODER_FULL;
         }
         //cout << "encoder: " << left_encoder << " " << right_encoder << endl;
-        encoder_left_pre = encoder.front_left;
-        encoder_right_pre = encoder.front_right;
+        encoder_left_pre = encoder.back_left;
+        encoder_right_pre = encoder.back_right;
 
         double left_rotary_radians = left_encoder / ENCODER_MAX * 2.0 * PI;
         double right_rotary_radians = right_encoder / ENCODER_MAX * 2.0 * PI;
@@ -313,7 +314,7 @@ publish_odometry(qbot_encoder_t encoder) {
 void
 Qbot_Communication::
 publish_ultrasound(qbot_ultrasound_t ultrasound) {
-    std_msgs::String msg;
+
     std_msgs::UInt16MultiArray ultrasound_msg;
     ultrasound_msg.data.push_back(ultrasound.front_left);
     ultrasound_msg.data.push_back(ultrasound.front_central);
@@ -329,7 +330,7 @@ publish_ultrasound(qbot_ultrasound_t ultrasound) {
     time_cap = 1.0 * ultrasound.front_right * 10.0 / 1000000.0;    // 10us -> s
     ultrasound.front_right = (int) (time_cap * 340.0 * 1000.0 / 2.0);    // m -> mm
     ss << (int) ultrasound.front_left << " " << (int) ultrasound.front_central << " " << (int) ultrasound.front_right;
-    msg.data = ss.str();
+
 #if DEBUG_PRINT
     std::cout << "-publish ultrasound: " << ss.str() << "\n";
 #endif

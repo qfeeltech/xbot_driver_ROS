@@ -1,10 +1,10 @@
 #! /bin/bash
-if [ -e /etc/udev/rules.d/100-qfeelxbot.rules ]
+if [ -e /etc/udev/rules.d/100-alldevice.rules ]
 then
     echo "You have already inited before."
     exit 0
 else
-    sudo cp `rospack find qfeel_xbot`/script/100-qfeelxbot.rules /etc/udev/rules.d/
+    sudo cp `rospack find qfeel_xbot`/script/100-alldevice.rules /etc/udev/rules.d/
     sudo service udev reload
     sudo service udev restart
     echo "Init successfully."

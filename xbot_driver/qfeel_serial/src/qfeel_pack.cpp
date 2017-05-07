@@ -385,7 +385,7 @@ read_thread() {
 
     while (not time_to_exit) {
         read_messages();
-        usleep(15000); // Read batches at 40Hz
+        usleep(9000); // Read batches at 40Hz
         read_time_out++;
         if (read_time_out > 100) {
             /*
