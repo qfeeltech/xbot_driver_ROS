@@ -160,7 +160,7 @@ void
 Qbot_Communication::
 publish_odometry(qbot_encoder_t encoder) {
     if(model_type_ == "diff"){
-        swap<uint16_t>(encoder.back_left,encoder.back_right);
+        // swap<uint16_t>(encoder.back_left,encoder.back_right);
 
 
         if (odometry_th_pre == -400) {    // -400 --> beginning
