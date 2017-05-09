@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+	
+	<include file="$(find pepperl_fuchs_r2000)/launch/r2000.launch"> 
+      <arg name="frame_id" value="/scan"/>
+      <arg name="scanner_ip" value="192.168.111.9"/>
+      <arg name="scan_frequency" value="35"/>
+      <arg name="samples_per_scan" value="3600"/>
+	</include>
+    <include file="$(find qfeel_xbot)/launch/qfeel_xbot.launch"/>
+	<node pkg="tf" type="static_transform_publisher" name="map_nav_broadcaster_pepperl" args="-0.10 0 0.1 -1.5707 0 0  base_link scan 100" />
+    
+    
+    <rosparam file="$(find qfeel_xbot)/param/ros.yaml"/>
+
+    <!-- Start Mapper to genreate map from laser scans -->
+    <node name="Mapper" pkg="nav2d_karto" type="mapper">
+        <rosparam file="$(find qfeel_xbot)/param/mapper.yaml"/>
+    </node>
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find qfeel_xbot)/param/navigation.rviz"/>
+
+</launch>
+
