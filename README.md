@@ -21,6 +21,23 @@ You can control the xbot with keyboard by excute：
 ```
 rosrun qfeel_keyop qfeel_keyop
 ```
+## Using Bluetooth
+1. Enable your device. 
+```
+sudo hciconfig hci0 up
+```
+2. Scan the device.
+```
+hcitool scan
+```
+3. Bind the device.
+```
+sudo rfcomm bind /dev/rfcomm0 E0:A6:70:8C:A3:02
+```
+4. Change the qfeel_xbot.launch file.
+```
+ <param name="serial_name" value="/dev/rfcomm0"/>
+```
 ## Topics
 The driver publish all sensor messages to ros topics.
 ### Published topics:

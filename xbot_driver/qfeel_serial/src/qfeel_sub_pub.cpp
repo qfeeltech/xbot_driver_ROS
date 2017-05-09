@@ -392,7 +392,10 @@ base_ctr_Callback(const geometry_msgs::Twist::ConstPtr &cmd_vel) {
     message.len = 0x0D;
     message.id = 0x03;
     linear_tmp = cmd_vel->linear.x;
-    angular_tmp = cmd_vel->angular.z;
+    if(model_type_ == "omni")
+        angular_tmp = -cmd_vel->angular.z;
+    else if(model_type_ == "diff")
+        angular_tmp = cmd_vel->angular.z;
 //	std::cout<< "x: " <<cmd_vel->linear.x<< "  y: " << cmd_vel->linear.y<< "   z: " <<cmd_vel->angular.z<< "\n";
     if (isnan(cmd_vel->linear.x)) {
         linear_x = 0;
@@ -404,8 +407,12 @@ base_ctr_Callback(const geometry_msgs::Twist::ConstPtr &cmd_vel) {
 
     if (isnan(cmd_vel->angular.z)) {
         angular_z = 0;
-    } else angular_z = -cmd_vel->angular.z; // The protocol of xbot state that right orientation is positive, so we positive the angular speed.
-
+    } else {
+        if(model_type_ == "omni")
+            angular_z = -cmd_vel->angular.z;
+        else if(model_type_ == "diff")
+            angular_z = cmd_vel->angular.z;
+    }
     linear_pre = linear_tmp;
 
     angular_pre = angular_tmp;
