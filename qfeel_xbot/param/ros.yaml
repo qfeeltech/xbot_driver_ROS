@@ -1,0 +1,16 @@
+# topics services and frames for all modules
+
+### TF frame#############################################
+laser_frame: scan
+robot_frame: scan
+odometry_frame: odom
+offset_frame: offset
+map_frame: map
+
+### ROS topics ############################################
+map_topic: map
+laser_topic: /r2000_node/scan
+
+### ROS services ##########################################
+map_service: static_map
+
