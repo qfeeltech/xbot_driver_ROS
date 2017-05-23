@@ -1,7 +1,10 @@
 # XBOT driver
 ## Quick Start
 Install ROS indigo environment first. See "http://wiki.ros.org/indigo/Installation/Ubuntu" for help
-
+Excute the following command to install the dependency.
+```
+sudo apt-get install ros-indigo-ecl-threads ros-indigo-ecl-errors
+```
 Clone this repository to your catkin_ws/src folder, then excute
 ```
 cd catkin_ws
